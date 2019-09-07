@@ -10,20 +10,20 @@ LRESULT CALLBACK WindowProc(HWND hwnd,
 							WPARAM wparam,
 							LPARAM lparam)
 {
-	HDC hdc; //дескриптор контекста устройтсва
+	HDC hdc; //Г¤ГҐГ±ГЄГ°ГЁГЇГІГ®Г° ГЄГ®Г­ГІГҐГЄГ±ГІГ  ГіГ±ГІГ°Г®Г©ГІГ±ГўГ 
 	switch (msg)
 	{
 		case WM_KEYDOWN:
 		{
 			if (wparam == 16)
 			{
-				MessageBox(NULL, LPCSTR("НА шиФтЕ, проаро"), LPCSTR("MessageBox"), 0);
+				MessageBox(NULL, LPCSTR("ГЌГЂ ГёГЁГ”ГІГ…, ГЇГ°Г®Г Г°Г®"), LPCSTR("MessageBox"), 0);
 			}
 		}break;
 		case WM_MOUSEMOVE:
 		{
 
-		}
+		}break;
 		case WM_DESTROY:
 		{ 
 			PostQuitMessage(0);

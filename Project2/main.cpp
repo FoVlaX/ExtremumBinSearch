@@ -5,10 +5,17 @@
 #include <stdio.h>
 #include <D3D11.h>
 #include <D3DX11.h>
+#include <xnamath.h>
+#include <D3Dcompiler.h>
+#include <D3DX11async.h>
 #define WINDOW_HEIGHT 400 //размеры окна
 #define WINDOW_WIDTH 400
 #define BBP 16 //глубина цвета
 #pragma comment(lib, "d3d11.lib")
+#pragma comment(lib,"D3DX11.lib") // вот оно то что надо было подключиtb
+#pragma comment(lib, "d3dcompiler.lib")
+float time = 0.0f;
+const int vCount = 60;
 HWND main_window_handle = NULL;  // идентификатор окна
 HINSTANCE main_instance = NULL;  // идентификатор приложения
 D3D_DRIVER_TYPE g_drivertype = D3D_DRIVER_TYPE_NULL; //
@@ -17,10 +24,22 @@ ID3D11Device *g_pd3device = NULL; // создание ресурсов (текстуры шейдеры, буферы
 ID3D11DeviceContext *g_pImmediateContext = NULL; // вывод графической информации
 IDXGISwapChain *g_pSwapChain = NULL;  // работа с буфером рисования и вывод нарисованного на экран, должен содержать два буфера задний и передний (экран ) для корректной отрисвки без мельтешений
 ID3D11RenderTargetView *g_pRenderTargetView = NULL; // собственно задний буфер
+ID3D11VertexShader *g_pVertexShader = NULL; //вершинный шейдер
+ID3D11PixelShader *g_pPixelShader = NULL; // пиксельынй шейдер
+ID3D11InputLayout *g_pVertexLayout = NULL; // описание формата вершин
+ID3D11Buffer *g_pVertexBuffer = NULL; // Буфер вершин
+
 
 HRESULT InitDevice();//инициализайция директХ
 void CleanUpDevice(); //удаление объектов Direct3D
 void Render(); //отрисовка 
+HRESULT InitGeometry();
+HRESULT CompileShaderFromFile(LPCSTR szFileName, LPCSTR szEntryPoint, LPCSTR szShaderModel, ID3DBlob** ppBlobOut);
+
+struct SimpleVertex
+{
+	XMFLOAT3 Pos;
+};
 
 LRESULT CALLBACK WindowProc(HWND hwnd,
 							UINT msg,
@@ -82,7 +101,7 @@ int WINAPI WinMain(HINSTANCE hinstance,
 	HWND hwnd;
 	if (!(hwnd = CreateWindowEx(NULL,
 		WINDOW_CLASS_NAME,
-		"only text",
+		"DirectX",
 		WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 		0, 0,
 		WINDOW_WIDTH, WINDOW_HEIGHT,
@@ -97,6 +116,12 @@ int WINAPI WinMain(HINSTANCE hinstance,
 	if (FAILED(InitDevice()))
 	{
 		CleanUpDevice();
+		return 0;
+	}
+
+	if (FAILED(InitGeometry()))
+	{
+		InitGeometry();
 		return 0;
 	}
 	
@@ -205,5 +230,129 @@ void Render()
 {
 	float ClearColor[4] = { 0.5f,0.5f,0.5f,1.0f };
 	g_pImmediateContext->ClearRenderTargetView(g_pRenderTargetView, ClearColor);
+
+	//Подключаем к устройству рисования шейдеры
+	g_pImmediateContext->VSSetShader(g_pVertexShader, NULL, 0);
+	g_pImmediateContext->PSSetShader(g_pPixelShader, NULL, 0);
+	g_pImmediateContext->Draw(vCount+2, 0);
+
 	g_pSwapChain->Present(0, 0);
+}
+
+HRESULT InitGeometry()
+{
+	HRESULT hr = S_OK;
+	//компиляция вершинного шейдера из файла
+	ID3DBlob* pVSBlob = NULL; //вспомогательный оъект просто место в оперативной памяти
+	hr = CompileShaderFromFile("urok2.fx", "VS", "vs_4_0", &pVSBlob);
+	if (FAILED(hr))
+	{
+		MessageBox(NULL,"VS Don't compile file FX, Please, execute this porgram from directory with FX file","ERROR",MB_OK);
+		return hr;
+	}
+
+	//Create Vertex SHader
+	hr = g_pd3device->CreateVertexShader(pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), NULL, &g_pVertexShader);
+	if (FAILED(hr))
+	{
+		pVSBlob->Release();
+		return hr;
+	}
+	//определение шаблона вершин
+	D3D11_INPUT_ELEMENT_DESC layout[] =
+	{
+		{"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0},
+	};
+	UINT numElements = ARRAYSIZE(layout);
+	//создание шаблона вершин
+	hr = g_pd3device->CreateInputLayout(layout,numElements,pVSBlob->GetBufferPointer(),pVSBlob->GetBufferSize(),&g_pVertexLayout);
+	pVSBlob->Release();
+	if (FAILED(hr)) return hr;
+	g_pImmediateContext->IASetInputLayout(g_pVertexLayout);
+
+	ID3DBlob* pPSBlob = NULL; //вспомогательный оъект просто место в оперативной памяти
+	hr = CompileShaderFromFile("urok2.fx", "PS", "ps_4_0", &pPSBlob);
+	if (FAILED(hr))
+	{
+		MessageBox(NULL, "PS Don't compile file FX, Please, execute this porgram from directory with FX file", "ERROR", MB_OK);
+		return hr;
+	}
+
+	//Create Vertex SHader
+	hr = g_pd3device->CreatePixelShader(pPSBlob->GetBufferPointer(), pPSBlob->GetBufferSize(), NULL, &g_pPixelShader);
+	if (FAILED(hr))
+	{
+		pPSBlob->Release();
+		return hr;
+	}
+
+	//создание буфера вершин
+	
+	SimpleVertex verticles[vCount+2];
+	float angle = 0;
+	float step = 4 * 3.14 / vCount;
+	int i = 0;
+	verticles[i].Pos.x = 0.0f + 0.7f*cos(angle); verticles[i].Pos.y = 0.0f + 0.7f*sin(angle);
+	angle += step;
+	verticles[i].Pos.z = 0.5f;
+	for ( i = 1; i < vCount+1; i++)
+	{
+		if ( i%2!=1)
+		{
+			verticles[i].Pos.x = 0.0f + (0.7f+time)*cos(angle); verticles[i].Pos.y = 0.0f + (0.7f+time)*sin(angle);
+			angle += step;
+			verticles[i].Pos.z = 0.5f;
+		}
+		else
+		{
+			verticles[i].Pos.x = 0.0f; verticles[i].Pos.y = 0.0f;
+			verticles[i].Pos.z = 0.5f;
+		}
+	}
+	i = vCount + 1;
+	angle = 0;
+	verticles[i].Pos.x = 0.0f + (0.7f+time)*cos(angle); verticles[i].Pos.y = 0.0f + 0.7f*sin(angle);
+	verticles[i].Pos.z = 0.5f;
+	
+	//Описывающая буфер структура
+	D3D11_BUFFER_DESC bd;
+	ZeroMemory(&bd, sizeof(bd));
+	bd.Usage = D3D11_USAGE_DEFAULT;
+	bd.ByteWidth = sizeof(SimpleVertex) * (vCount+2); //размер буфера = размер одной вершины*3;
+	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bd.CPUAccessFlags = 0;
+	D3D11_SUBRESOURCE_DATA InitData; // структура, содержащая данные буфера;
+	ZeroMemory(&InitData, sizeof(InitData));
+	InitData.pSysMem = verticles; // указатель на наши вершины;
+	//Создаем объект буффера вершин ID3D11Buffer
+	hr = g_pd3device->CreateBuffer(&bd, &InitData, &g_pVertexBuffer);
+	if (FAILED(hr))
+	{
+		return hr;
+	}
+	//усtановка буфера вершин
+	UINT stride = sizeof(SimpleVertex);
+	UINT offset = 0;
+	g_pImmediateContext->IASetVertexBuffers(0, 1, &g_pVertexBuffer, &stride, &offset);
+	//установка способа отрисовки вершин в буфре
+	g_pImmediateContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	return S_OK;
+}
+HRESULT CompileShaderFromFile(LPCSTR szFileName, LPCSTR szEntryPoint,LPCSTR szShaderModel, ID3DBlob** ppBlobOut)
+{
+	HRESULT hr = S_OK;
+	DWORD dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
+	ID3DBlob* pErrorBlob;
+	hr = D3DX11CompileFromFile(szFileName, NULL, NULL, szEntryPoint, szShaderModel, dwShaderFlags, 0, NULL, ppBlobOut, &pErrorBlob, NULL);
+	if (FAILED(hr))
+	{
+		if (pErrorBlob != NULL)
+		{
+			OutputDebugStringA((char *)pErrorBlob->GetBufferPointer());
+		}
+		if (pErrorBlob) pErrorBlob->Release();
+		return hr;
+	}
+	if (pErrorBlob) pErrorBlob->Release();
+	return S_OK;
 }

@@ -8,37 +8,57 @@
 #include <xnamath.h>
 #include <D3Dcompiler.h>
 #include <D3DX11async.h>
-#define WINDOW_HEIGHT 400 //размеры окна
+#define WINDOW_HEIGHT 400 //СЂР°Р·РјРµСЂС‹ РѕРєРЅР°
 #define WINDOW_WIDTH 400
-#define BBP 16 //глубина цвета
-#pragma comment(lib, "d3d11.lib")
-#pragma comment(lib,"D3DX11.lib") // вот оно то что надо было подключиtb
+#define BBP 16 //РіР»СѓР±РёРЅР° С†РІРµС‚Р°
+
+#pragma comment(lib,"D3DX11.lib") // РІРѕС‚ РѕРЅРѕ С‚Рѕ С‡С‚Рѕ РЅР°РґРѕ Р±С‹Р»Рѕ РїРѕРґРєР»СЋС‡Рёtb
 #pragma comment(lib, "d3dcompiler.lib")
+#pragma comment(lib, "d3d11.lib")
+
 float time = 0.0f;
 const int vCount = 60;
-HWND main_window_handle = NULL;  // идентификатор окна
-HINSTANCE main_instance = NULL;  // идентификатор приложения
+HWND main_window_handle = NULL;  // РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РѕРєРЅР°
+HINSTANCE main_instance = NULL;  // РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїСЂРёР»РѕР¶РµРЅРёСЏ
 D3D_DRIVER_TYPE g_drivertype = D3D_DRIVER_TYPE_NULL; //
-D3D_FEATURE_LEVEL g_featurelevel = D3D_FEATURE_LEVEL_11_0; // версия  директХ поддерживаемая видеокартой
-ID3D11Device *g_pd3device = NULL; // создание ресурсов (текстуры шейдеры, буферы 3-ч мерных объектов  и т.д.)
-ID3D11DeviceContext *g_pImmediateContext = NULL; // вывод графической информации
-IDXGISwapChain *g_pSwapChain = NULL;  // работа с буфером рисования и вывод нарисованного на экран, должен содержать два буфера задний и передний (экран ) для корректной отрисвки без мельтешений
-ID3D11RenderTargetView *g_pRenderTargetView = NULL; // собственно задний буфер
-ID3D11VertexShader *g_pVertexShader = NULL; //вершинный шейдер
-ID3D11PixelShader *g_pPixelShader = NULL; // пиксельынй шейдер
-ID3D11InputLayout *g_pVertexLayout = NULL; // описание формата вершин
-ID3D11Buffer *g_pVertexBuffer = NULL; // Буфер вершин
+D3D_FEATURE_LEVEL g_featurelevel = D3D_FEATURE_LEVEL_11_0; // РІРµСЂСЃРёСЏ  РґРёСЂРµРєС‚РҐ РїРѕРґРґРµСЂР¶РёРІР°РµРјР°СЏ РІРёРґРµРѕРєР°СЂС‚РѕР№
+ID3D11Device *g_pd3device = NULL; // СЃРѕР·РґР°РЅРёРµ СЂРµСЃСѓСЂСЃРѕРІ (С‚РµРєСЃС‚СѓСЂС‹ С€РµР№РґРµСЂС‹, Р±СѓС„РµСЂС‹ 3-С‡ РјРµСЂРЅС‹С… РѕР±СЉРµРєС‚РѕРІ  Рё С‚.Рґ.)
+ID3D11DeviceContext *g_pImmediateContext = NULL; // РІС‹РІРѕРґ РіСЂР°С„РёС‡РµСЃРєРѕР№ РёРЅС„РѕСЂРјР°С†РёРё
+IDXGISwapChain *g_pSwapChain = NULL;  // СЂР°Р±РѕС‚Р° СЃ Р±СѓС„РµСЂРѕРј СЂРёСЃРѕРІР°РЅРёСЏ Рё РІС‹РІРѕРґ РЅР°СЂРёСЃРѕРІР°РЅРЅРѕРіРѕ РЅР° СЌРєСЂР°РЅ, РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ РґРІР° Р±СѓС„РµСЂР° Р·Р°РґРЅРёР№ Рё РїРµСЂРµРґРЅРёР№ (СЌРєСЂР°РЅ ) РґР»СЏ РєРѕСЂСЂРµРєС‚РЅРѕР№ РѕС‚СЂРёСЃРІРєРё Р±РµР· РјРµР»СЊС‚РµС€РµРЅРёР№
+ID3D11RenderTargetView *g_pRenderTargetView = NULL; // СЃРѕР±СЃС‚РІРµРЅРЅРѕ Р·Р°РґРЅРёР№ Р±СѓС„РµСЂ
+ID3D11VertexShader *g_pVertexShader = NULL; //РІРµСЂС€РёРЅРЅС‹Р№ С€РµР№РґРµСЂ
+ID3D11PixelShader *g_pPixelShader = NULL; // РїРёРєСЃРµР»СЊС‹РЅР№ С€РµР№РґРµСЂ
+ID3D11InputLayout *g_pVertexLayout = NULL; // РѕРїРёСЃР°РЅРёРµ С„РѕСЂРјР°С‚Р° РІРµСЂС€РёРЅ
+ID3D11Buffer *g_pVertexBuffer = NULL; // Р‘СѓС„РµСЂ РІРµСЂС€РёРЅ
+ID3D11Buffer *g_pIndexBuffer = NULL; //Р‘СѓС„РµСЂ РёРЅРґРµРєСЃРѕРІ РІРµСЂС€РёРЅ РІ РєР°РєРѕРј РїРѕСЂСЏРґРєРµ РѕС‚СЂРёСЃРѕРІС‹РІР°С‚СЊ
+ID3D11Buffer *g_pConstantBuffer = NULL; // РљРѕРЅСЃС‚Р°С‚РЅС‹Р№ Р±СѓС„РµСЂ
 
+XMMATRIX g_World; //РјР°С‚СЂРёС†Р° РјРёСЂР°00
+XMMATRIX g_View; //РјР°С‚СЂС†РёР° РІРёРґР°
+XMMATRIX g_Projection; //РјР°С‚СЂРёС†Р° РїСЂРѕРµРєС†РёРё
 
-HRESULT InitDevice();//инициализайция директХ
-void CleanUpDevice(); //удаление объектов Direct3D
-void Render(); //отрисовка 
+HRESULT InitDevice();//РёРЅРёС†РёР°Р»РёР·Р°Р№С†РёСЏ РґРёСЂРµРєС‚РҐ
+void CleanUpDevice(); //СѓРґР°Р»РµРЅРёРµ РѕР±СЉРµРєС‚РѕРІ Direct3D
+void Render(); //РѕС‚СЂРёСЃРѕРІРєР° 
+float ViewAngle = 0;
+HRESULT InitMatrixes(); //РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РјР°С‚СЂРёС†
+void SetMatrixes(); // РёР·РјРµРЅРµРЅРёРµ РјР°С‚СЂРёС†С‹ РјРёСЂР°
 HRESULT InitGeometry();
 HRESULT CompileShaderFromFile(LPCSTR szFileName, LPCSTR szEntryPoint, LPCSTR szShaderModel, ID3DBlob** ppBlobOut);
 
 struct SimpleVertex
 {
 	XMFLOAT3 Pos;
+	XMFLOAT4 Color; //РєР°Р¶РґР°СЏ РІРµСЂС€РЅР° СЃРѕРґРµСЂР¶РёС‚ РёРЅС„Сѓ Рѕ С†РІРµС‚Рµ
+};
+
+//РЎС‚СЂСѓРєС‚СѓСЂР° РєРѕРЅСЃС‚Р°РЅС‚РЅРѕРіРѕ Р±СѓС„РµСЂР°
+
+struct ConstantBuffer
+{
+	XMMATRIX mWorld; //РјР°С‚СЂРёС†Р° РјРёСЂР°
+	XMMATRIX mView; //РјР°СЂРёС†Р° РІРёРґР°
+	XMMATRIX mProjection; //РјР°С‚СЂРёС†Р° РїСЂРѕРµРєС†РёРё
 };
 
 LRESULT CALLBACK WindowProc(HWND hwnd,
@@ -46,24 +66,27 @@ LRESULT CALLBACK WindowProc(HWND hwnd,
 							WPARAM wparam,
 							LPARAM lparam)
 {
-	HDC hdc; //дескриптор контекста устройтсва
+	PAINTSTRUCT ps;
+	HDC hdc; //РґРµСЃРєСЂРёРїС‚РѕСЂ РєРѕРЅС‚РµРєСЃС‚Р° СѓСЃС‚СЂРѕР№С‚СЃРІР°
 	switch (msg)
 	{
 		case WM_KEYDOWN:
 		{
 			if (wparam == 16)
 			{
-				MessageBox(NULL, LPCSTR("НА шиФтЕ, проаро"), LPCSTR("MessageBox"), 0);
+				MessageBox(NULL, LPCSTR("РќРђ С€РёР¤С‚Р•, РїСЂРѕР°СЂРѕ"), LPCSTR("MessageBox"), 0);
 			}
 		}break;
 		case WM_PAINT:
 		{
+			hdc = BeginPaint(hwnd, &ps);
+			EndPaint(hwnd, &ps);
 
 		}break;
 		case WM_DESTROY:
 		{ 
 			PostQuitMessage(0);
-			return 0;
+			
 		}break;
 	default:break;
 	}
@@ -89,7 +112,7 @@ int WINAPI WinMain(HINSTANCE hinstance,
 	winclass.hInstance = hinstance;
 	winclass.hIcon = LoadIcon(NULL,IDI_APPLICATION);
 	winclass.hCursor = LoadCursor(NULL,IDC_ARROW);
-	winclass.hbrBackground - (HBRUSH)GetStockObject(BLACK_BRUSH);
+	winclass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 	winclass.lpszMenuName = NULL;
 	winclass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 	winclass.lpszClassName = WINDOW_CLASS_NAME;
@@ -113,6 +136,7 @@ int WINAPI WinMain(HINSTANCE hinstance,
 
 	main_window_handle = hwnd;
 	main_instance = hinstance;
+
 	if (FAILED(InitDevice()))
 	{
 		CleanUpDevice();
@@ -121,10 +145,17 @@ int WINAPI WinMain(HINSTANCE hinstance,
 
 	if (FAILED(InitGeometry()))
 	{
-		InitGeometry();
+		CleanUpDevice();
 		return 0;
 	}
-	
+
+	if (FAILED(InitMatrixes()))
+	{
+		CleanUpDevice();
+		return 0;
+	}
+
+	bool dir = true;
 	while (1)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -135,9 +166,11 @@ int WINAPI WinMain(HINSTANCE hinstance,
 		}
 		else
 		{
+			SetMatrixes();
 			Render();
 		}
-
+		
+		
 	}
 	CleanUpDevice();
 
@@ -149,8 +182,8 @@ HRESULT InitDevice()
 	HRESULT hr = S_OK;
 	RECT rc;
 	GetClientRect(main_window_handle, &rc);
-	UINT width = rc.right - rc.left; //получаем ширину
-	UINT height = rc.bottom - rc.top; // и высоту окна
+	UINT width = rc.right - rc.left; //РїРѕР»СѓС‡Р°РµРј С€РёСЂРёРЅСѓ
+	UINT height = rc.bottom - rc.top; // Рё РІС‹СЃРѕС‚Сѓ РѕРєРЅР°
 
 	UINT createDeviceFlags = 0;
 
@@ -160,8 +193,8 @@ HRESULT InitDevice()
 		D3D_DRIVER_TYPE_WARP,
 		D3D_DRIVER_TYPE_REFERENCE,
 	};
-	UINT numDriverTypes = ARRAYSIZE(driverTypes); //создаем массив для проверки на хардварную обработку
-	//создаем список поддерживаемых версий директХ
+	UINT numDriverTypes = ARRAYSIZE(driverTypes); //СЃРѕР·РґР°РµРј РјР°СЃСЃРёРІ РґР»СЏ РїСЂРѕРІРµСЂРєРё РЅР° С…Р°СЂРґРІР°СЂРЅСѓСЋ РѕР±СЂР°Р±РѕС‚РєСѓ
+	//СЃРѕР·РґР°РµРј СЃРїРёСЃРѕРє РїРѕРґРґРµСЂР¶РёРІР°РµРјС‹С… РІРµСЂСЃРёР№ РґРёСЂРµРєС‚РҐ
 
 	D3D_FEATURE_LEVEL featureLevels[] = {
 		D3D_FEATURE_LEVEL_11_0,
@@ -169,42 +202,42 @@ HRESULT InitDevice()
 		D3D_FEATURE_LEVEL_10_0,
 	};
 	UINT numFeatureLevels = ARRAYSIZE(featureLevels);
-	//Создание устройств директХ. Заполним структуру
-	// которая описывает свойства переднегобуфера и привязывает его к нашему окну
+	//РЎРѕР·РґР°РЅРёРµ СѓСЃС‚СЂРѕР№СЃС‚РІ РґРёСЂРµРєС‚РҐ. Р—Р°РїРѕР»РЅРёРј СЃС‚СЂСѓРєС‚СѓСЂСѓ
+	// РєРѕС‚РѕСЂР°СЏ РѕРїРёСЃС‹РІР°РµС‚ СЃРІРѕР№СЃС‚РІР° РїРµСЂРµРґРЅРµРіРѕР±СѓС„РµСЂР° Рё РїСЂРёРІСЏР·С‹РІР°РµС‚ РµРіРѕ Рє РЅР°С€РµРјСѓ РѕРєРЅСѓ
 	DXGI_SWAP_CHAIN_DESC sd;
 	ZeroMemory(&sd, sizeof(sd));
 	sd.BufferCount = 1; //one back buffer
 	sd.BufferDesc.Width = width; //shirina bufera
 	sd.BufferDesc.Height = height; //visota buffera
-	sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM; // ФОРМАТ ПИКСЕЛЯ В БУФЕРЕ
-	sd.BufferDesc.RefreshRate.Numerator = 75; // частота обновления экрана
+	sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM; // Р¤РћР РњРђРў РџРРљРЎР•Р›РЇ Р’ Р‘РЈР¤Р•Р Р•
+	sd.BufferDesc.RefreshRate.Numerator = 75; // С‡Р°СЃС‚РѕС‚Р° РѕР±РЅРѕРІР»РµРЅРёСЏ СЌРєСЂР°РЅР°
 	sd.BufferDesc.RefreshRate.Denominator = 1;// 
-	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT; //НАЗНАЧЕНИЕ БУФЕРА - peredniu? БУФЕР
-	sd.OutputWindow = main_window_handle; //привязка к окну
+	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT; //РќРђР—РќРђР§Р•РќРР• Р‘РЈР¤Р•Р Рђ - peredniu? Р‘РЈР¤Р•Р 
+	sd.OutputWindow = main_window_handle; //РїСЂРёРІСЏР·РєР° Рє РѕРєРЅСѓ
 	sd.SampleDesc.Count = 1;
 	sd.SampleDesc.Quality = 0;
-	sd.Windowed = TRUE; // оконный режим
+	sd.Windowed = TRUE; // РѕРєРѕРЅРЅС‹Р№ СЂРµР¶РёРј
 	//
 	for (UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++)
 	{
 		g_drivertype = driverTypes[driverTypeIndex];
 		hr = D3D11CreateDeviceAndSwapChain(NULL, g_drivertype, NULL, createDeviceFlags, featureLevels, numFeatureLevels, D3D11_SDK_VERSION,
 			&sd, &g_pSwapChain, &g_pd3device, &g_featurelevel, &g_pImmediateContext);
-		if SUCCEEDED(hr) break; //если устройства созданы то выходим из цикла
+		if SUCCEEDED(hr) break; //РµСЃР»Рё СѓСЃС‚СЂРѕР№СЃС‚РІР° СЃРѕР·РґР°РЅС‹ С‚Рѕ РІС‹С…РѕРґРёРј РёР· С†РёРєР»Р°
 	}
 	if FAILED(hr) return hr;
-	//создаем задний буфер в SDK
-	//RenderTargetOutput - это передний буфер, RenderTargetView - задний
+	//СЃРѕР·РґР°РµРј Р·Р°РґРЅРёР№ Р±СѓС„РµСЂ РІ SDK
+	//RenderTargetOutput - СЌС‚Рѕ РїРµСЂРµРґРЅРёР№ Р±СѓС„РµСЂ, RenderTargetView - Р·Р°РґРЅРёР№
 
-	ID3D11Texture2D* pBackBuffer = NULL;//объект текстур, т.е. область памяти которуюю можно юзать для расования как буфер глубин и как текстуру
+	ID3D11Texture2D* pBackBuffer = NULL;//РѕР±СЉРµРєС‚ С‚РµРєСЃС‚СѓСЂ, С‚.Рµ. РѕР±Р»Р°СЃС‚СЊ РїР°РјСЏС‚Рё РєРѕС‚РѕСЂСѓСЋСЋ РјРѕР¶РЅРѕ СЋР·Р°С‚СЊ РґР»СЏ СЂР°СЃРѕРІР°РЅРёСЏ РєР°Рє Р±СѓС„РµСЂ РіР»СѓР±РёРЅ Рё РєР°Рє С‚РµРєСЃС‚СѓСЂСѓ
 	hr = g_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID *)&pBackBuffer);
 	if FAILED(hr) return hr;
 	hr = g_pd3device->CreateRenderTargetView(pBackBuffer, NULL, &g_pRenderTargetView);
 	pBackBuffer->Release();
 	if FAILED(hr) return hr;
-	//подключаем объект заднего буфера к контексту устройства
+	//РїРѕРґРєР»СЋС‡Р°РµРј РѕР±СЉРµРєС‚ Р·Р°РґРЅРµРіРѕ Р±СѓС„РµСЂР° Рє РєРѕРЅС‚РµРєСЃС‚Сѓ СѓСЃС‚СЂРѕР№СЃС‚РІР°
 	g_pImmediateContext->OMSetRenderTargets(1, &g_pRenderTargetView, NULL);
-	//настройка вьюпорта
+	//РЅР°СЃС‚СЂРѕР№РєР° РІСЊСЋРїРѕСЂС‚Р°
 	D3D11_VIEWPORT vp;
 	vp.Width = (FLOAT)width;
 	vp.Height = (FLOAT)height;
@@ -212,7 +245,7 @@ HRESULT InitDevice()
 	vp.MaxDepth = 1.0f;
 	vp.TopLeftX = 0;
 	vp.TopLeftY = 0;
-	//подключаем вьюпорт к контексту устроства
+	//РїРѕРґРєР»СЋС‡Р°РµРј РІСЊСЋРїРѕСЂС‚ Рє РєРѕРЅС‚РµРєСЃС‚Сѓ СѓСЃС‚СЂРѕСЃС‚РІР°
 	g_pImmediateContext->RSSetViewports(1, &vp);
 	return S_OK;
 }
@@ -221,6 +254,10 @@ void CleanUpDevice()
 {
 	if (g_pImmediateContext) g_pImmediateContext->ClearState();
 	if (g_pRenderTargetView) g_pRenderTargetView->Release();
+	if (g_pConstantBuffer) g_pConstantBuffer->Release();
+	if (g_pIndexBuffer) g_pIndexBuffer->Release();
+	if (g_pVertexShader) g_pVertexShader->Release();
+	if (g_pPixelShader) g_pPixelShader->Release();
 	if (g_pSwapChain) g_pSwapChain->Release();
 	if (g_pImmediateContext) g_pImmediateContext->Release();
 	if (g_pd3device)  g_pd3device->Release();
@@ -228,13 +265,14 @@ void CleanUpDevice()
 
 void Render()
 {
-	float ClearColor[4] = { 0.5f,0.5f,0.5f,1.0f };
+	float ClearColor[4] = { 0.5f,0.5f,0.6f,1.0f };
 	g_pImmediateContext->ClearRenderTargetView(g_pRenderTargetView, ClearColor);
-
-	//Подключаем к устройству рисования шейдеры
+	
 	g_pImmediateContext->VSSetShader(g_pVertexShader, NULL, 0);
+	g_pImmediateContext->VSSetConstantBuffers(0, 1, &g_pConstantBuffer); // 0 - С‚РѕС‡РєР° РІС…РѕРґР° РІ РєРѕРЅСЃС‚Р°РЅС‚ Р±СѓС„С„РµСЂ РІ С€РµР№РґРµСЂРµ
 	g_pImmediateContext->PSSetShader(g_pPixelShader, NULL, 0);
-	g_pImmediateContext->Draw(vCount+2, 0);
+
+	g_pImmediateContext->DrawIndexed(18,0,0);
 
 	g_pSwapChain->Present(0, 0);
 }
@@ -242,9 +280,9 @@ void Render()
 HRESULT InitGeometry()
 {
 	HRESULT hr = S_OK;
-	//компиляция вершинного шейдера из файла
-	ID3DBlob* pVSBlob = NULL; //вспомогательный оъект просто место в оперативной памяти
-	hr = CompileShaderFromFile("urok2.fx", "VS", "vs_4_0", &pVSBlob);
+	//РєРѕРјРїРёР»СЏС†РёСЏ РІРµСЂС€РёРЅРЅРѕРіРѕ С€РµР№РґРµСЂР° РёР· С„Р°Р№Р»Р°
+	ID3DBlob* pVSBlob = NULL; //РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Р№ РѕСЉРµРєС‚ РїСЂРѕСЃС‚Рѕ РјРµСЃС‚Рѕ РІ РѕРїРµСЂР°С‚РёРІРЅРѕР№ РїР°РјСЏС‚Рё
+	hr = CompileShaderFromFile("urok2.fx", "VS", "vs_5_0", &pVSBlob);
 	if (FAILED(hr))
 	{
 		MessageBox(NULL,"VS Don't compile file FX, Please, execute this porgram from directory with FX file","ERROR",MB_OK);
@@ -258,19 +296,20 @@ HRESULT InitGeometry()
 		pVSBlob->Release();
 		return hr;
 	}
-	//определение шаблона вершин
+	//РѕРїСЂРµРґРµР»РµРЅРёРµ С€Р°Р±Р»РѕРЅР° РІРµСЂС€РёРЅ
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
 		{"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0},
+		{"COLOR",0,DXGI_FORMAT_R32G32B32A32_FLOAT,0,12,D3D11_INPUT_PER_VERTEX_DATA,0},
 	};
 	UINT numElements = ARRAYSIZE(layout);
-	//создание шаблона вершин
+	//СЃРѕР·РґР°РЅРёРµ С€Р°Р±Р»РѕРЅР° РІРµСЂС€РёРЅ
 	hr = g_pd3device->CreateInputLayout(layout,numElements,pVSBlob->GetBufferPointer(),pVSBlob->GetBufferSize(),&g_pVertexLayout);
 	pVSBlob->Release();
 	if (FAILED(hr)) return hr;
 	g_pImmediateContext->IASetInputLayout(g_pVertexLayout);
 
-	ID3DBlob* pPSBlob = NULL; //вспомогательный оъект просто место в оперативной памяти
+	ID3DBlob* pPSBlob = NULL; //РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Р№ РѕСЉРµРєС‚ РїСЂРѕСЃС‚Рѕ РјРµСЃС‚Рѕ РІ РѕРїРµСЂР°С‚РёРІРЅРѕР№ РїР°РјСЏС‚Рё
 	hr = CompileShaderFromFile("urok2.fx", "PS", "ps_4_0", &pPSBlob);
 	if (FAILED(hr))
 	{
@@ -286,56 +325,77 @@ HRESULT InitGeometry()
 		return hr;
 	}
 
-	//создание буфера вершин
+	//СЃРѕР·РґР°РЅРёРµ Р±СѓС„РµСЂР° РІРµСЂС€РёРЅ
 	
-	SimpleVertex verticles[vCount+2];
-	float angle = 0;
-	float step = 4 * 3.14 / vCount;
-	int i = 0;
-	verticles[i].Pos.x = 0.0f + 0.7f*cos(angle); verticles[i].Pos.y = 0.0f + 0.7f*sin(angle);
-	angle += step;
-	verticles[i].Pos.z = 0.5f;
-	for ( i = 1; i < vCount+1; i++)
-	{
-		if ( i%2!=1)
-		{
-			verticles[i].Pos.x = 0.0f + (0.7f+time)*cos(angle); verticles[i].Pos.y = 0.0f + (0.7f+time)*sin(angle);
-			angle += step;
-			verticles[i].Pos.z = 0.5f;
-		}
-		else
-		{
-			verticles[i].Pos.x = 0.0f; verticles[i].Pos.y = 0.0f;
-			verticles[i].Pos.z = 0.5f;
-		}
-	}
-	i = vCount + 1;
-	angle = 0;
-	verticles[i].Pos.x = 0.0f + (0.7f+time)*cos(angle); verticles[i].Pos.y = 0.0f + 0.7f*sin(angle);
-	verticles[i].Pos.z = 0.5f;
+	SimpleVertex verticles[] =
+	{// РєРѕРѕСЂРґРёРЅР°С‚С‹ С… Сѓ Р·РµС‚                      С†РІРµС‚ СЂРіР±Р°
+		{XMFLOAT3(0.0f,1.5f,0.0f), XMFLOAT4(1.0f,1.0f,0.0f,1.0f) },
+		{XMFLOAT3(-1.0f,0.0f,-1.0f), XMFLOAT4(0.0f,1.0f,0.0f,1.0f) },
+		{XMFLOAT3(1.0f,0.0f,-1.0f), XMFLOAT4(1.0f,0.0f,0.0f,1.0f) },
+		{XMFLOAT3(-1.0f,0.0f,1.0f), XMFLOAT4(0.0f,1.0f,1.0f,1.0f) },
+		{XMFLOAT3(1.0f,0.0f,1.5f), XMFLOAT4(1.0f,0.0f,1.0f,1.0f) }
+	};
+
+
 	
-	//Описывающая буфер структура
+	//РћРїРёСЃС‹РІР°СЋС‰Р°СЏ Р±СѓС„РµСЂ СЃС‚СЂСѓРєС‚СѓСЂР°
 	D3D11_BUFFER_DESC bd;
 	ZeroMemory(&bd, sizeof(bd));
 	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.ByteWidth = sizeof(SimpleVertex) * (vCount+2); //размер буфера = размер одной вершины*3;
+	bd.ByteWidth = sizeof(SimpleVertex) * 5; //СЂР°Р·РјРµСЂ Р±СѓС„РµСЂР° = СЂР°Р·РјРµСЂ РѕРґРЅРѕР№ РІРµСЂС€РёРЅС‹*5;
 	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	bd.CPUAccessFlags = 0;
-	D3D11_SUBRESOURCE_DATA InitData; // структура, содержащая данные буфера;
+	D3D11_SUBRESOURCE_DATA InitData; // СЃС‚СЂСѓРєС‚СѓСЂР°, СЃРѕРґРµСЂР¶Р°С‰Р°СЏ РґР°РЅРЅС‹Рµ Р±СѓС„РµСЂР°;
 	ZeroMemory(&InitData, sizeof(InitData));
-	InitData.pSysMem = verticles; // указатель на наши вершины;
-	//Создаем объект буффера вершин ID3D11Buffer
+	InitData.pSysMem = verticles; // СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РЅР°С€Рё РІРµСЂС€РёРЅС‹;
+	//РЎРѕР·РґР°РµРј РѕР±СЉРµРєС‚ Р±СѓС„С„РµСЂР° РІРµСЂС€РёРЅ ID3D11Buffer
 	hr = g_pd3device->CreateBuffer(&bd, &InitData, &g_pVertexBuffer);
 	if (FAILED(hr))
 	{
 		return hr;
 	}
-	//усtановка буфера вершин
+	//РЎРѕР·РґР°РЅРёРµ Р±СѓС„РµСЂСЂР° РёРЅРґРµРєСЃРѕРІ
+	//РЎРѕР·РґР°РґРёРј РјР°СЃСЃРёРІ СЃ РґР°РЅРЅС‹РјРё
+	WORD indices[] =
+	{
+		0,2,1,
+		0,3,4,  //РїРѕСЂСЏРґРѕРє РѕС‚СЂРёСЃРѕРІРєРё РїСЂРёРјРёС‚РёРІРѕРІ РїРёСЂР°РјРёРґС‹
+		0,1,3,
+		0,4,2,
+
+		1,2,3,
+		2,4,3,
+	};
+	ZeroMemory(&bd, sizeof(bd));
+	bd.Usage = D3D11_USAGE_DEFAULT;
+	bd.ByteWidth = sizeof(WORD) * 18; //6 С‚СЂРµСѓРіРѕР»СЊРЅРёРєРѕРІ 18 РІРµСЂС€РёРЅ 6*3
+	bd.BindFlags = D3D11_BIND_INDEX_BUFFER; //С‚РёРї Р±СѓС„РµСЂР° - РёРЅРґРµРєСЃРѕРІ
+	bd.CPUAccessFlags = 0;
+	ZeroMemory(&InitData, sizeof(InitData));
+	InitData.pSysMem = indices;
+	//РЎРѕР·РґР°РµРј РіР»РѕР±Р°Р»СЊРЅС‹Р№ РѕР±СЉРµРєС‚ Р±СѓС„РµСЂР° РёРЅРґРµРєСЃСЃРѕРІ
+	hr = g_pd3device->CreateBuffer(&bd,&InitData,&g_pIndexBuffer);
+	if (FAILED(hr)) 
+		return hr;
+	//СѓСЃtР°РЅРѕРІРєР° Р±СѓС„РµСЂР° РІРµСЂС€РёРЅ
 	UINT stride = sizeof(SimpleVertex);
 	UINT offset = 0;
 	g_pImmediateContext->IASetVertexBuffers(0, 1, &g_pVertexBuffer, &stride, &offset);
-	//установка способа отрисовки вершин в буфре
-	g_pImmediateContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	//СѓСЃС‚Р°РЅРѕРІРєР° Р±СѓС„РµСЂР° РёРЅРґРµРєСЃРѕРІ
+	
+	g_pImmediateContext->IASetIndexBuffer(g_pIndexBuffer, DXGI_FORMAT_R16_UINT, 0);
+	//СѓСЃС‚Р°РЅРѕРІРєР° СЃРїРѕСЃРѕР±Р° РѕС‚СЂРёСЃРѕРІРєРё РІРµСЂС€РёРЅ РІ Р±СѓС„СЂРµ
+	g_pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	//РЎРѕР·РґР°РЅРёРµ РєРѕРЅСЃС‚Р°РЅС‚РЅРѕРіРѕ Р±СѓС„РµСЂР°
+	ZeroMemory(&bd, sizeof(bd));
+	bd.Usage = D3D11_USAGE_DEFAULT;
+	bd.ByteWidth = sizeof(ConstantBuffer);
+	bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	bd.CPUAccessFlags = 0;
+	hr = g_pd3device->CreateBuffer(&bd, NULL, &g_pConstantBuffer);
+	if (FAILED(hr)) return hr;
+
 	return S_OK;
 }
 HRESULT CompileShaderFromFile(LPCSTR szFileName, LPCSTR szEntryPoint,LPCSTR szShaderModel, ID3DBlob** ppBlobOut)
@@ -355,4 +415,73 @@ HRESULT CompileShaderFromFile(LPCSTR szFileName, LPCSTR szEntryPoint,LPCSTR szSh
 	}
 	if (pErrorBlob) pErrorBlob->Release();
 	return S_OK;
+}
+
+HRESULT InitMatrixes()
+{
+	RECT rc;
+	GetClientRect(main_window_handle, &rc);
+	UINT width = rc.right - rc.left;
+	UINT height = rc.bottom - rc.top;
+	g_World = XMMatrixIdentity(); //РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РјР°С‚СЂРёС†Сѓ РјРёСЂР°
+	// РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РјР°С‚СЂРёС†Сѓ РІРёРґР°
+	XMVECTOR Eye = XMVectorSet(0.0f,1.0f,-5.0f, 0.0f); //РѕС‚РєСѓРґР° СЃРјРѕС‚СЂРёРј
+	XMVECTOR At = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f); //РљСѓРґР° СЃРјРѕС‚СЂРёРј
+	XMVECTOR Up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f); // РќР°РїСЂР°РІР»РµРЅРёРµ РІРµСЂС…Р°
+	g_View = XMMatrixLookAtLH(Eye, At, Up);
+
+	//РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РјР°С‚СЂРёС†С‹ РїСЂРѕРµРєС†РёРё
+
+	g_Projection = XMMatrixPerspectiveFovLH(XM_PIDIV4, width / (FLOAT)height, 0.01f, 100.0f);
+	ConstantBuffer cb;
+	cb.mWorld = XMMatrixTranspose(g_World);
+	cb.mView = XMMatrixTranspose(g_View);
+	cb.mProjection = XMMatrixTranspose(g_Projection);
+	g_pImmediateContext->UpdateSubresource(g_pConstantBuffer, 0, NULL, &cb, 0, 0);
+	return S_OK;
+}
+
+void SetMatrixes()
+{
+	static float t = 0.0f;
+	/*
+	if (g_drivertype == D3D_DRIVER_TYPE_REFERENCE)
+	{
+		t += (float)XM_PI*0.0125f;
+	}
+	else
+	{
+		static DWORD dwTimeStart = 0;
+		DWORD dwTimeCur = GetTickCount();
+		if (dwTimeStart == 0)
+			dwTimeStart = dwTimeCur;
+		t = (dwTimeCur - dwTimeStart) / 1000.0f;
+	}*/
+	//РІСЂР°С‰Р°С‚СЊ РјРёСЂ РїРѕ РѕСЃРё РЈ РЅР° СѓРіРѕР» С‚ РІ СЂР°dРёР°РЅР°С…
+
+
+
+	float x = -5.0 *cos(ViewAngle);
+	float z = -5.0 *sin(ViewAngle);
+
+	if (ViewAngle > XM_2PI) ViewAngle -= XM_2PI;
+
+	ViewAngle += (float)XM_PI*0.00025;
+
+	
+
+	XMVECTOR Eye = XMVectorSet(x, 1.0, z, 0.0f); //РѕС‚РєСѓРґР° СЃРјРѕС‚СЂРёРј
+	XMVECTOR At = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f); //РљСѓРґР° СЃРјРѕС‚СЂРёРј
+	XMVECTOR Up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f); // РќР°РїСЂР°РІР»РµРЅРёРµ РІРµСЂС…Р°
+	g_View = XMMatrixLookAtLH(Eye, At, Up);
+	
+	//g_World = XMMatrixRotationY(t);
+
+	// РѕР±РЅРѕРІР»СЏРµРј РєРѕРЅСЃС‚Р°С‚РЅС‹Р№ Р±СѓС„С„РµСЂ СЃРѕР·РґР°РґРёРј СЃС‚СЂСѓРєС‚СѓСЂСѓ Рё РєРёРЅРµРј РµРµ РІ РЅР°С€ Р±СѓС„РµСЂ
+	ConstantBuffer cb;
+	cb.mWorld = XMMatrixTranspose(g_World);
+	cb.mView = XMMatrixTranspose(g_View);
+	cb.mProjection = XMMatrixTranspose(g_Projection);
+	g_pImmediateContext->UpdateSubresource(g_pConstantBuffer, 0, NULL, &cb, 0, 0);
+
 }

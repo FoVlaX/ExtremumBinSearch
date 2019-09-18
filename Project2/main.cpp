@@ -8,8 +8,8 @@
 #include <xnamath.h>
 #include <D3Dcompiler.h>
 #include <D3DX11async.h>
-#define WINDOW_HEIGHT 400 //размеры окна
-#define WINDOW_WIDTH 400
+#define WINDOW_HEIGHT 800 //размеры окна
+#define WINDOW_WIDTH 800
 #define BBP 16 //глубина цвета
 
 #pragma comment(lib,"D3DX11.lib") // вот оно то что надо было подключиtb
@@ -501,10 +501,10 @@ void SetMatrixes(float angle)
 	if (ViewAngle > XM_2PI) ViewAngle -= XM_2PI;
 
 	ViewAngle += (float)XM_PI*0.00025;
-	XMMATRIX mPos = XMMatrixRotationY(-t + angle);
-	XMMATRIX mSpin = XMMatrixRotationY(2 * t);
-	XMMATRIX mTrans = XMMatrixTranslation(-3.0f, 0.f, 0.f);
-	XMMATRIX mScale = XMMatrixScaling(0.5f+pulse,0.5f+pulse,0.5f+pulse);
+	XMMATRIX mPos = XMMatrixRotationY(-t + angle); //поворачиваем смещенную от центра пираамиду на угол -т ++ англе
+	XMMATRIX mSpin = XMMatrixRotationY(2 * t); // вращаем пирамиду вокруг воей оси
+	XMMATRIX mTrans = XMMatrixTranslation(-3.0f, 0.f, 0.f); //смщаем пирамиду на -3 по оси х
+	XMMATRIX mScale = XMMatrixScaling(0.5f+pulse,0.5f+pulse,0.5f+pulse); //меняем маштаб пирамиды
 	if (Bpulse && pulse <0.3f ) pulse += 0.00004f;
 	else Bpulse = false;
 
@@ -513,8 +513,8 @@ void SetMatrixes(float angle)
 	else Bpulse = true;
 
 	
-	float x = -12.0*cos(t);
-	float y = -12.0*sin(t);
+	float x = -12.0*cos(t*0.3);
+	float y = -12.0*sin(t*0.3);
 	XMVECTOR Eye = XMVectorSet(0.0f, y , x , 0.0f); //откуда смотрим
 	XMVECTOR At = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f); //Куда смотрим
 	XMVECTOR Up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f); // Направление верха
@@ -524,7 +524,7 @@ void SetMatrixes(float angle)
 
 	// обновляем констатный буффер создадим структуру и кинем ее в наш буфер
 
-	g_World = mScale * mSpin*mTrans*mPos;
+	g_World = mScale * mSpin*mTrans*mPos; //маштабируем поворачиваем вокруг оси смешаемм на 3 и поворачиваем относительно У на заданный угол все изи
 
 	ConstantBuffer cb;
 	cb.mWorld = XMMatrixTranspose(g_World);

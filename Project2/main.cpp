@@ -32,17 +32,20 @@ ID3D11InputLayout *g_pVertexLayout = NULL; // описание формата в
 ID3D11Buffer *g_pVertexBuffer = NULL; // Буфер вершин
 ID3D11Buffer *g_pIndexBuffer = NULL; //Буфер индексов вершин в каком порядке отрисовывать
 ID3D11Buffer *g_pConstantBuffer = NULL; // Констатный буфер
+ID3D11Texture2D* g_pDepthStencil = NULL;
+ID3D11DepthStencilView* g_pDepthStencilView = NULL;
 
 XMMATRIX g_World; //матрица мира00
 XMMATRIX g_View; //матрциа вида
 XMMATRIX g_Projection; //матрица проекции
-
+float pulse = 0.0f;
+bool Bpulse = true;
 HRESULT InitDevice();//инициализайция директХ
 void CleanUpDevice(); //удаление объектов Direct3D
 void Render(); //отрисовка 
 float ViewAngle = 0;
 HRESULT InitMatrixes(); //Инициализация матриц
-void SetMatrixes(); // изменение матрицы мира
+void SetMatrixes(float angle); // изменение матрицы мира
 HRESULT InitGeometry();
 HRESULT CompileShaderFromFile(LPCSTR szFileName, LPCSTR szEntryPoint, LPCSTR szShaderModel, ID3DBlob** ppBlobOut);
 
@@ -166,7 +169,6 @@ int WINAPI WinMain(HINSTANCE hinstance,
 		}
 		else
 		{
-			SetMatrixes();
 			Render();
 		}
 		
@@ -235,8 +237,39 @@ HRESULT InitDevice()
 	hr = g_pd3device->CreateRenderTargetView(pBackBuffer, NULL, &g_pRenderTargetView);
 	pBackBuffer->Release();
 	if FAILED(hr) return hr;
-	//подключаем объект заднего буфера к контексту устройства
-	g_pImmediateContext->OMSetRenderTargets(1, &g_pRenderTargetView, NULL);
+
+	//Создаем буффер глубин
+	// Создаем текстуру описание буфера глубин
+
+	D3D11_TEXTURE2D_DESC descDepth;
+	ZeroMemory(&descDepth, sizeof(descDepth));
+	descDepth.Width = width;
+	descDepth.Height = height;
+	descDepth.MipLevels = 1;
+	descDepth.ArraySize = 1;
+	descDepth.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	descDepth.SampleDesc.Count = 1;
+	descDepth.SampleDesc.Quality = 0;
+	descDepth.Usage = D3D11_USAGE_DEFAULT;
+	descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	descDepth.CPUAccessFlags = 0;
+	descDepth.MiscFlags = 0;
+	//при помощи заполненной структуры описания созахдаем объект тектуры
+	hr = g_pd3device->CreateTexture2D(&descDepth, NULL, &g_pDepthStencil);
+	if (FAILED(hr)) 
+		return hr;
+	//now создаем сам объект буффера глубин сначало как обычно стурктура с описынием
+	D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;
+	ZeroMemory(&descDSV, sizeof(descDSV));
+	descDSV.Format = descDepth.Format;
+	descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	descDSV.Texture2D.MipSlice = 0;
+	hr = g_pd3device->CreateDepthStencilView(g_pDepthStencil, &descDSV, &g_pDepthStencilView);
+	if (FAILED(hr)) 
+		return hr;
+	//теперь подключим к устройствву рисоваия сразу оба вида (глубин и задний буффер)
+	g_pImmediateContext->OMSetRenderTargets(1, &g_pRenderTargetView, g_pDepthStencilView);
+
 	//настройка вьюпорта
 	D3D11_VIEWPORT vp;
 	vp.Width = (FLOAT)width;
@@ -258,6 +291,8 @@ void CleanUpDevice()
 	if (g_pIndexBuffer) g_pIndexBuffer->Release();
 	if (g_pVertexShader) g_pVertexShader->Release();
 	if (g_pPixelShader) g_pPixelShader->Release();
+	if (g_pDepthStencil) g_pDepthStencil->Release();
+	if (g_pDepthStencilView) g_pDepthStencilView->Release();
 	if (g_pSwapChain) g_pSwapChain->Release();
 	if (g_pImmediateContext) g_pImmediateContext->Release();
 	if (g_pd3device)  g_pd3device->Release();
@@ -267,13 +302,18 @@ void Render()
 {
 	float ClearColor[4] = { 0.5f,0.5f,0.6f,1.0f };
 	g_pImmediateContext->ClearRenderTargetView(g_pRenderTargetView, ClearColor);
-	
-	g_pImmediateContext->VSSetShader(g_pVertexShader, NULL, 0);
-	g_pImmediateContext->VSSetConstantBuffers(0, 1, &g_pConstantBuffer); // 0 - точка входа в констант буффер в шейдере
-	g_pImmediateContext->PSSetShader(g_pPixelShader, NULL, 0);
+	g_pImmediateContext->ClearDepthStencilView(g_pDepthStencilView,D3D11_CLEAR_DEPTH, 1.0f,0);
 
-	g_pImmediateContext->DrawIndexed(18,0,0);
 
+	for (int i = 0; i < 6; i++)
+	{
+		SetMatrixes(i*(XM_PI * 2) / 6);
+
+		g_pImmediateContext->VSSetShader(g_pVertexShader, NULL, 0);
+		g_pImmediateContext->VSSetConstantBuffers(0, 1, &g_pConstantBuffer); // 0 - точка входа в констант буффер в шейдере
+		g_pImmediateContext->PSSetShader(g_pPixelShader, NULL, 0);
+		g_pImmediateContext->DrawIndexed(18, 0, 0);
+	}
 	g_pSwapChain->Present(0, 0);
 }
 
@@ -329,11 +369,11 @@ HRESULT InitGeometry()
 	
 	SimpleVertex verticles[] =
 	{// координаты х у зет                      цвет ргба
-		{XMFLOAT3(0.0f,1.5f,0.0f), XMFLOAT4(1.0f,1.0f,0.0f,1.0f) },
+		{XMFLOAT3(0.0f,1.4f,0.0f), XMFLOAT4(1.0f,1.0f,0.0f,1.0f) },
 		{XMFLOAT3(-1.0f,0.0f,-1.0f), XMFLOAT4(0.0f,1.0f,0.0f,1.0f) },
 		{XMFLOAT3(1.0f,0.0f,-1.0f), XMFLOAT4(1.0f,0.0f,0.0f,1.0f) },
 		{XMFLOAT3(-1.0f,0.0f,1.0f), XMFLOAT4(0.0f,1.0f,1.0f,1.0f) },
-		{XMFLOAT3(1.0f,0.0f,1.5f), XMFLOAT4(1.0f,0.0f,1.0f,1.0f) }
+		{XMFLOAT3(1.0f,0.0f,1.0f), XMFLOAT4(1.0f,0.0f,1.0f,1.0f) }
 	};
 
 
@@ -425,7 +465,7 @@ HRESULT InitMatrixes()
 	UINT height = rc.bottom - rc.top;
 	g_World = XMMatrixIdentity(); //инициализируем матрицу мира
 	// инициализируем матрицу вида
-	XMVECTOR Eye = XMVectorSet(0.0f,1.0f,-5.0f, 0.0f); //откуда смотрим
+	XMVECTOR Eye = XMVectorSet(0.0f,2.0f,-9.0f, 0.0f); //откуда смотрим
 	XMVECTOR At = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f); //Куда смотрим
 	XMVECTOR Up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f); // Направление верха
 	g_View = XMMatrixLookAtLH(Eye, At, Up);
@@ -441,10 +481,10 @@ HRESULT InitMatrixes()
 	return S_OK;
 }
 
-void SetMatrixes()
+void SetMatrixes(float angle)
 {
 	static float t = 0.0f;
-	/*
+	
 	if (g_drivertype == D3D_DRIVER_TYPE_REFERENCE)
 	{
 		t += (float)XM_PI*0.0125f;
@@ -456,21 +496,26 @@ void SetMatrixes()
 		if (dwTimeStart == 0)
 			dwTimeStart = dwTimeCur;
 		t = (dwTimeCur - dwTimeStart) / 1000.0f;
-	}*/
-	//вращать мир по оси У на угол т в раdианах
-
-
-
-	float x = -5.0 *cos(ViewAngle);
-	float z = -5.0 *sin(ViewAngle);
+	}
 
 	if (ViewAngle > XM_2PI) ViewAngle -= XM_2PI;
 
 	ViewAngle += (float)XM_PI*0.00025;
+	XMMATRIX mPos = XMMatrixRotationY(-t + angle);
+	XMMATRIX mSpin = XMMatrixRotationY(2 * t);
+	XMMATRIX mTrans = XMMatrixTranslation(-3.0f, 0.f, 0.f);
+	XMMATRIX mScale = XMMatrixScaling(0.5f+pulse,0.5f+pulse,0.5f+pulse);
+	if (Bpulse && pulse <0.3f ) pulse += 0.00004f;
+	else Bpulse = false;
+
+
+	if (!Bpulse && pulse > 0.0f) pulse -= 0.00004f;
+	else Bpulse = true;
 
 	
-
-	XMVECTOR Eye = XMVectorSet(x, 1.0, z, 0.0f); //откуда смотрим
+	float x = -12.0*cos(t);
+	float y = -12.0*sin(t);
+	XMVECTOR Eye = XMVectorSet(0.0f, y , x , 0.0f); //откуда смотрим
 	XMVECTOR At = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f); //Куда смотрим
 	XMVECTOR Up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f); // Направление верха
 	g_View = XMMatrixLookAtLH(Eye, At, Up);
@@ -478,6 +523,9 @@ void SetMatrixes()
 	//g_World = XMMatrixRotationY(t);
 
 	// обновляем констатный буффер создадим структуру и кинем ее в наш буфер
+
+	g_World = mScale * mSpin*mTrans*mPos;
+
 	ConstantBuffer cb;
 	cb.mWorld = XMMatrixTranspose(g_World);
 	cb.mView = XMMatrixTranspose(g_View);

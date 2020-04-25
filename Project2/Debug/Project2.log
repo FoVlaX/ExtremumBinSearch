@@ -1,4 +1,143 @@
 ﻿  main.cpp
-c:\users\vlad\source\repos\project2\project2\main.cpp(13): warning C4101: hdc: неиспользованная локальная переменная
-c:\users\vlad\source\repos\project2\project2\main.cpp(56): warning C4552: ">>": результат выражения не используется
-  Project2.vcxproj -> C:\Users\vlad\source\repos\Project2\Debug\Project2.exe
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(12,1): warning C4005: DXGI_STATUS_OCCLUDED: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55840): message : см. предыдущее определение "DXGI_STATUS_OCCLUDED"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(13,1): warning C4005: DXGI_STATUS_CLIPPED: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55849): message : см. предыдущее определение "DXGI_STATUS_CLIPPED"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(14,1): warning C4005: DXGI_STATUS_NO_REDIRECTION: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55858): message : см. предыдущее определение "DXGI_STATUS_NO_REDIRECTION"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(15,1): warning C4005: DXGI_STATUS_NO_DESKTOP_ACCESS: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55867): message : см. предыдущее определение "DXGI_STATUS_NO_DESKTOP_ACCESS"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(16,1): warning C4005: DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55876): message : см. предыдущее определение "DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(17,1): warning C4005: DXGI_STATUS_MODE_CHANGED: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55885): message : см. предыдущее определение "DXGI_STATUS_MODE_CHANGED"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(18,1): warning C4005: DXGI_STATUS_MODE_CHANGE_IN_PROGRESS: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55894): message : см. предыдущее определение "DXGI_STATUS_MODE_CHANGE_IN_PROGRESS"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(21,1): warning C4005: DXGI_ERROR_INVALID_CALL: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55909): message : см. предыдущее определение "DXGI_ERROR_INVALID_CALL"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(22,1): warning C4005: DXGI_ERROR_NOT_FOUND: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55918): message : см. предыдущее определение "DXGI_ERROR_NOT_FOUND"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(23,1): warning C4005: DXGI_ERROR_MORE_DATA: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55927): message : см. предыдущее определение "DXGI_ERROR_MORE_DATA"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(24,1): warning C4005: DXGI_ERROR_UNSUPPORTED: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55936): message : см. предыдущее определение "DXGI_ERROR_UNSUPPORTED"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(25,1): warning C4005: DXGI_ERROR_DEVICE_REMOVED: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55945): message : см. предыдущее определение "DXGI_ERROR_DEVICE_REMOVED"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(26,1): warning C4005: DXGI_ERROR_DEVICE_HUNG: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55954): message : см. предыдущее определение "DXGI_ERROR_DEVICE_HUNG"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(27,1): warning C4005: DXGI_ERROR_DEVICE_RESET: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55964): message : см. предыдущее определение "DXGI_ERROR_DEVICE_RESET"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(28,1): warning C4005: DXGI_ERROR_WAS_STILL_DRAWING: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55973): message : см. предыдущее определение "DXGI_ERROR_WAS_STILL_DRAWING"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(29,1): warning C4005: DXGI_ERROR_FRAME_STATISTICS_DISJOINT: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55983): message : см. предыдущее определение "DXGI_ERROR_FRAME_STATISTICS_DISJOINT"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(30,1): warning C4005: DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55992): message : см. предыдущее определение "DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(31,1): warning C4005: DXGI_ERROR_DRIVER_INTERNAL_ERROR: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56002): message : см. предыдущее определение "DXGI_ERROR_DRIVER_INTERNAL_ERROR"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(32,1): warning C4005: DXGI_ERROR_NONEXCLUSIVE: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56011): message : см. предыдущее определение "DXGI_ERROR_NONEXCLUSIVE"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(33,1): warning C4005: DXGI_ERROR_NOT_CURRENTLY_AVAILABLE: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56020): message : см. предыдущее определение "DXGI_ERROR_NOT_CURRENTLY_AVAILABLE"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(34,1): warning C4005: DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56030): message : см. предыдущее определение "DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(35,1): warning C4005: DXGI_ERROR_REMOTE_OUTOFMEMORY: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56039): message : см. предыдущее определение "DXGI_ERROR_REMOTE_OUTOFMEMORY"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\D3D11.h(917,1): warning C4005: D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56303): message : см. предыдущее определение "D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\D3D11.h(918,1): warning C4005: D3D11_ERROR_FILE_NOT_FOUND: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56312): message : см. предыдущее определение "D3D11_ERROR_FILE_NOT_FOUND"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\D3D11.h(919,1): warning C4005: D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56322): message : см. предыдущее определение "D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\D3D11.h(920,1): warning C4005: D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56331): message : см. предыдущее определение "D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\d3d10.h(608,1): warning C4005: D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56279): message : см. предыдущее определение "D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\d3d10.h(609,1): warning C4005: D3D10_ERROR_FILE_NOT_FOUND: изменение макроопределения
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56288): message : см. предыдущее определение "D3D10_ERROR_FILE_NOT_FOUND"
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2662,52): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2662,64): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2662,76): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2662,88): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2663,52): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2663,64): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2663,76): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2664,52): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2664,64): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2664,76): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2665,52): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2666,64): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2667,76): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2668,88): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2689,46): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2689,58): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2689,70): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2689,82): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2690,88): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2691,88): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2694,88): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2695,88): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2698,64): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2702,76): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2702,88): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2712,65): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2712,91): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2713,52): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2713,78): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2715,52): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2716,52): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2716,65): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2717,52): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2717,65): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2717,78): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2727,54): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2728,56): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2729,58): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2730,54): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2730,65): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2731,56): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2731,67): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2732,54): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2732,67): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2742,60): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2742,79): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2743,70): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamath.h(2754,73): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamathconvert.inl(2254,71): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamathconvert.inl(4523,69): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamathconvert.inl(4577,68): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamathconvert.inl(4639,65): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamathconvert.inl(4707,64): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamathconvert.inl(4770,64): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamathconvert.inl(4832,63): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamathmisc.inl(518,43): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamathmisc.inl(519,40): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamathmisc.inl(519,51): warning C4838: преобразование из "unsigned int" в "INT" требует сужающего преобразования
+D:\source\repos\Project2\Project2\D3DINIT.h(61,50): warning C4091: static : пропускается слева от "typelight", когда ни одна переменная не объявлена
+D:\source\repos\Project2\Project2\D3DINIT.h(89,2): warning C4091: static : пропускается слева от "ConstantBufferLight", когда ни одна переменная не объявлена
+D:\source\repos\Project2\Project2\D3DINIT.h(95,2): warning C4091: static : пропускается слева от "ConstantBufferPointLight", когда ни одна переменная не объявлена
+D:\source\repos\Project2\Project2\main.cpp(115,13): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(116,14): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(202,13): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(203,14): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(249,13): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(250,14): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(297,13): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(298,14): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(337,19): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(419,14): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(420,15): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(486,10): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(487,10): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(497,10): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(498,10): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(517,10): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(518,10): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(561,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\source\repos\Project2\Project2\main.cpp(619,27): warning C4305: *=: усечение из "double" в "float"
+D:\source\repos\Project2\Project2\main.cpp(620,27): warning C4305: *=: усечение из "double" в "float"
+D:\source\repos\Project2\Project2\main.cpp(621,27): warning C4305: *=: усечение из "double" в "float"
+D:\source\repos\Project2\Project2\main.cpp(629,27): warning C4305: /=: усечение из "double" в "float"
+D:\source\repos\Project2\Project2\main.cpp(630,27): warning C4305: /=: усечение из "double" в "float"
+D:\source\repos\Project2\Project2\main.cpp(631,27): warning C4305: /=: усечение из "double" в "float"
+  Project2.vcxproj -> D:\source\repos\Project2\Debug\Project2.exe

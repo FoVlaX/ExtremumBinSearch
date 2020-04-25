@@ -16,7 +16,49 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Файлы ресурсов</Filter>
+      <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="D3DINIT.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="WININIT.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="server.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ver.txt">
+      <Filter>Исходные файлы</Filter>
+    </Text>
+    <Text Include="ind.txt">
+      <Filter>Исходные файлы</Filter>
+    </Text>
+    <Text Include="galaxycode.txt">
+      <Filter>Исходные файлы</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D3DINIT.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="WININIT.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="server.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="depth.fx">
+      <Filter>Исходные файлы</Filter>
+    </FxCompile>
+    <FxCompile Include="shaderPS.fx">
+      <Filter>Исходные файлы</Filter>
+    </FxCompile>
+    <FxCompile Include="shaderVS.fx">
+      <Filter>Исходные файлы</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
